@@ -4,15 +4,15 @@ const puppeteer = require('puppeteer');
 const jetpack = require('fs-jetpack');
 const urls = [
     {
-        url: 'https://gardening.stackexchange.com/questions?sort=newest',
+        url: 'https://gardening.stackexchange.com/questions?pagesize=50&sort=newest',
         baseDir: 'gardening'
     },
     {
-        url: 'https://sustainability.stackexchange.com/questions?sort=newest',
+        url: 'https://sustainability.stackexchange.com/questions?pagesize=50&sort=newest',
         baseDir: 'sustainability'
     },
     {
-        url: 'https://electronics.stackexchange.com/questions?sort=newest',
+        url: 'https://electronics.stackexchange.com/questions?pagesize=50&sort=newest',
         baseDir: 'electronics'
     }
 ];
