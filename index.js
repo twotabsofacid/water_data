@@ -119,11 +119,15 @@ class Water {
                 questionCommentsText = obj.questionComments.reduce(function(accumulator, str) {
                     return `${accumulator}\n\n${str}`;
                 });
+            } else {
+                questionCommentsText = '';
             }
             if (obj.answers.length) {
                 answersText = obj.answers.reduce(function (accumulator, str) {
                     return `${accumulator}\n\n${str}`;
                 });
+            } else {
+                answersText = '';
             }
             let fileText = `QUESTION:\n${obj.questionText}\n\n\nQUESTION COMMENTS:\n${questionCommentsText}\n\n\nANSWERS:\n${answersText}`;
             jetpack.dir(`documents/${baseDir}`)
