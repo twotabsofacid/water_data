@@ -1,10 +1,20 @@
 'use strict';
 
 const puppeteer = require('puppeteer');
-const urlList = [
-    'https://gardening.stackexchange.com/questions?sort=newest',
-    'https://sustainability.stackexchange.com/questions?sort=newest',
-    'https://electronics.stackexchange.com/questions?sort=newest'
+const jetpack = require('fs-jetpack');
+const urls = [
+    {
+        url: 'https://gardening.stackexchange.com/questions?sort=newest',
+        baseDir: 'gardening'
+    },
+    {
+        url: 'https://sustainability.stackexchange.com/questions?sort=newest',
+        baseDir: 'sustainability'
+    },
+    {
+        url: 'https://electronics.stackexchange.com/questions?sort=newest',
+        baseDir: 'electronics'
+    }
 ];
 
 /**
@@ -17,11 +27,9 @@ class Water {
     constructor() {
         process.setMaxListeners(Infinity);
         this.addListeners();
-        for (let url of urlList) {
-            this.constructPageLinksArray(url).then((value) => {
-                console.log(`${startString} STARTING QUESTION AND ANSWER TEXT ${startString}`);
-                console.log(value);
-                console.log(`${endString} ENDING QUESTION AND ANSWER TEXT ${endString}`);
+        for (let [index, urlObj] of urls.entries()) {
+            this.constructPageLinksArray(urlObj.url).then((value) => {
+                this.writeToFiles(urlObj.baseDir, value);
             });
         }
     }
@@ -72,7 +80,7 @@ class Water {
                     const page = await browser.newPage();
                     await page.goto(url);
                     await page.waitFor(1000);
-                    const result = await page.evaluate(() => {
+                    const result = await page.evaluate((url) => {
                         let questionComments = [].slice.call(document.querySelectorAll('.question .comments .comment-body'));
                         let questionCommentsText = [];
                         let j = questionComments.length;
@@ -86,12 +94,13 @@ class Water {
                             answersText[k] = answers[k].innerText;
                         }
                         returnObj = {
+                            "questionSlug": `${url.split('questions/')[1].split('/')[0]}-${url.split('questions/')[1].split('/')[1]}`,
                             "questionText": document.querySelector('.question .post-text').innerText,
                             "questionComments": questionCommentsText,
                             "answers": answersText
                         }
                         return returnObj;
-                    });
+                    }, url);
                     browser.close();
                     returnArr.push(result);
                 }
@@ -100,6 +109,26 @@ class Water {
                 resolve(returnArr);
             });
         });
+    }
+    writeToFiles(baseDir, value) {
+        for (let obj of value) {
+
+            console.log(obj);
+            let questionCommentsText, answersText;
+            if (obj.questionComments.length) {
+                questionCommentsText = obj.questionComments.reduce(function(accumulator, str) {
+                    return `${accumulator}\n\n${str}`;
+                });
+            }
+            if (obj.answers.length) {
+                answersText = obj.answers.reduce(function (accumulator, str) {
+                    return `${accumulator}\n\n${str}`;
+                });
+            }
+            let fileText = `QUESTION:\n${obj.questionText}\n\n\nQUESTION COMMENTS:\n${questionCommentsText}\n\n\nANSWERS:\n${answersText}`;
+            jetpack.dir(`documents/${baseDir}`)
+                .file(`${obj.questionSlug}.txt`, {content: fileText});
+        }
     }
 }
 

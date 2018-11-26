@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "water": "mkdir -p documents/ && rm -rf documents/* && node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs-jetpack": "^2.2.0",
     "puppeteer": "^1.10.0"
   }
 }
