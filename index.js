@@ -4,15 +4,15 @@ const puppeteer = require('puppeteer');
 const jetpack = require('fs-jetpack');
 const urls = [
     {
-        url: 'https://gardening.stackexchange.com/questions?pagesize=50&sort=newest',
+        url: 'https://gardening.stackexchange.com/questions?sort=newest',
         baseDir: 'gardening'
     },
     {
-        url: 'https://sustainability.stackexchange.com/questions?pagesize=50&sort=newest',
+        url: 'https://sustainability.stackexchange.com/questions?sort=newest',
         baseDir: 'sustainability'
     },
     {
-        url: 'https://electronics.stackexchange.com/questions?pagesize=50&sort=newest',
+        url: 'https://electronics.stackexchange.com/questions?sort=newest',
         baseDir: 'electronics'
     }
 ];
@@ -27,6 +27,7 @@ class Water {
     constructor() {
         process.setMaxListeners(Infinity);
         this.addListeners();
+        console.log(`${startString} STARTING ${startString}`)
         for (let [index, urlObj] of urls.entries()) {
             this.constructPageLinksArray(urlObj.url).then((value) => {
                 this.writeToFiles(urlObj.baseDir, value);
@@ -112,8 +113,9 @@ class Water {
     }
     writeToFiles(baseDir, value) {
         for (let obj of value) {
-
+            console.log(`${startString} START OF SCRAPED FILE ${startString}`);
             console.log(obj);
+            console.log(`${endString} END OF SCRAPED FILE ${endString}`);
             let questionCommentsText, answersText;
             if (obj.questionComments.length) {
                 questionCommentsText = obj.questionComments.reduce(function(accumulator, str) {
