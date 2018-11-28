@@ -12,6 +12,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "fs-jetpack": "^2.2.0",
-    "puppeteer": "^1.10.0"
+    "puppeteer": "^1.10.0",
+    "usb": "^1.5.0"
   }
 }
