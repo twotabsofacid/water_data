@@ -16,10 +16,10 @@ To install, simply clone this repo, `cd` into the directory, and run:
 $ npm install
 ```
 
-followed by
+You can then run the watering script by doing
 
 ```
-$ npm run water
+$ ./water.sh
 ```
 
-This will extract the latest data on electronics, sustainability, and gardening from StackExchange.
+This will extract the latest data on electronics, sustainability, and gardening from StackExchange and copy it to the flash drive you have plugged in (named CESDD).
