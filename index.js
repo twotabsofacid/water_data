@@ -70,20 +70,20 @@ class Water {
     sayGoodbye() {
         console.log(chalk.white.bgCyan.bold(`\n\n\n\n\n\n\n\n\n\n${startString} ENDING ${startString}`));
         console.log(chalk.green(art.flower));
-        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}   thank you   ${endString}`));
+        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}       thank you       ${endString}`));
         setTimeout(() => {
-            console.log(chalk.hex("#222").bgHex("#06B1DB").bold(`${endString}  for watering  ${endString}`));
+            console.log(chalk.hex("#222").bgHex("#06B1DB").bold(`${endString}       for taking      ${endString}`));
             setTimeout(() => {
-                console.log(chalk.hex("#222").bgHex("#00DBAE").bold(`${endString} the system ${endString}`));
+                console.log(chalk.hex("#222").bgHex("#00DBAE").bold(`${endString}        the time       ${endString}`));
                 setTimeout(() => {
-                    console.log(chalk.hex("#222").bgHex("#00DB03").bold(`${endString}   please disconnect   ${endString}`));
+                    console.log(chalk.hex("#222").bgHex("#67DB55").bold(`${endString}   please disconnect   ${endString}`));
                     setTimeout(() => {
-                        console.log(chalk.hex("#222").bgHex("#00DB03").bold(`${endString}   the drive   ${endString}`));
+                        console.log(chalk.hex("#222").bgHex("#C178C9").bold(`${endString}       the drive       ${endString}`));
                         setTimeout(() => {
-                            console.log(chalk.hex("#222").bgHex("#00DB03").bold(`${endString}   safely   ${endString}`));
-                        })
-                    })
-                }, 1000)
+                            console.log(chalk.hex("#222").bgHex("#4269C9").bold(`${endString}        safely         ${endString}`));
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
             }, 1000);
         }, 1000);
     }
