@@ -2,6 +2,8 @@
 
 const puppeteer = require('puppeteer');
 const jetpack = require('fs-jetpack');
+const chalk = require('chalk');
+const art = require('./ascii-art');
 const urls = [
     {
         url: 'https://gardening.stackexchange.com/questions?sort=newest',
@@ -27,7 +29,18 @@ class Water {
     constructor() {
         process.setMaxListeners(Infinity);
         this.addListeners();
-        console.log(`${startString} STARTING ${startString}`)
+        console.log(chalk.white.bgCyan.bold(`${startString} STARTING ${startString}`));
+        console.log(chalk.green(art.flower));
+        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}   this might   ${endString}`));
+        setTimeout(() => {
+            console.log(chalk.hex("#222").bgHex("#06B1DB").bold(`${endString}  take a while  ${endString}`));
+            setTimeout(() => {
+                console.log(chalk.hex("#222").bgHex("#00DBAE").bold(`${endString} take this time ${endString}`));
+                setTimeout(() => {
+                    console.log(chalk.hex("#222").bgHex("#00DB03").bold(`${endString}   to reflect   ${endString}`));
+                }, 1000)
+            }, 1000);
+        }, 1000);
         for (let [index, urlObj] of urls.entries()) {
             this.constructPageLinksArray(urlObj.url).then((value) => {
                 this.writeToFiles(urlObj.baseDir, value);
@@ -36,7 +49,7 @@ class Water {
     }
     addListeners() {
         process.on("unhandledRejection", (reason, p) => {
-            console.error("Unhandled Rejection at: Promise", p, "reason:", reason);
+            console.error(chalk.red("Unhandled Rejection at: Promise", p, "reason:", reason));
             process.exit(1);
         });
     }
@@ -113,9 +126,6 @@ class Water {
     }
     writeToFiles(baseDir, value) {
         for (let obj of value) {
-            console.log(`${startString} START OF SCRAPED FILE ${startString}`);
-            console.log(obj);
-            console.log(`${endString} END OF SCRAPED FILE ${endString}`);
             let questionCommentsText, answersText;
             if (obj.questionComments.length) {
                 questionCommentsText = obj.questionComments.reduce(function(accumulator, str) {
@@ -132,6 +142,9 @@ class Water {
                 answersText = '';
             }
             let fileText = `QUESTION:\n${obj.questionText}\n\n\nQUESTION COMMENTS:\n${questionCommentsText}\n\n\nANSWERS:\n${answersText}`;
+            console.log(chalk.white.bgHex("#2FDB8D").bold(`\n\n\n${startString} START OF SCRAPED FILE ${startString}`));
+            console.log(fileText);
+            console.log(chalk.hex("#222").bgHex("#FFFF51").bold(`${endString} END OF SCRAPED FILE ${endString}`));
             jetpack.dir(`documents/${baseDir}`)
                 .file(`${obj.questionSlug}.txt`, {content: fileText});
         }
