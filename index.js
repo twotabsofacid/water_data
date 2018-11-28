@@ -5,6 +5,7 @@ const jetpack = require('fs-jetpack');
 const chalk = require('chalk');
 const art = require('./ascii-art');
 let scrapeCount = 0;
+let timeoutSeconds = 2;
 const urls = [
     {
         url: 'https://gardening.stackexchange.com/questions?sort=newest',
@@ -63,14 +64,14 @@ class Water {
                 console.log(chalk.hex("#222").bgHex("#00DBAE").bold(`${endString} take this time ${endString}`));
                 setTimeout(() => {
                     console.log(chalk.hex("#222").bgHex("#00DB03").bold(`${endString}   to reflect   ${endString}`));
-                }, 1000)
-            }, 1000);
-        }, 1000);
+                }, timeoutSeconds * 1000)
+            }, timeoutSeconds * 1000);
+        }, timeoutSeconds * 1000);
     }
     sayGoodbye() {
         console.log(chalk.white.bgCyan.bold(`\n\n\n\n\n\n\n\n\n\n${startString} ENDING ${startString}`));
         console.log(chalk.green(art.flower));
-        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}     thank you      ${endString}`));
+        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}     thank you,     ${endString}`));
         setTimeout(() => {
             console.log(chalk.hex("#222").bgHex("#06B1DB").bold(`${endString}      new data      ${endString}`));
             setTimeout(() => {
@@ -83,12 +84,12 @@ class Water {
                             console.log(chalk.hex("#222").bgHex("#4269C9").bold(`${endString}     the drive      ${endString}`));
                             setTimeout(() => {
                                 console.log(chalk.hex("#222").bgHex("#72C9C2").bold(`${endString}       safely       ${endString}`));
-                            }, 1000);
-                        }, 1000);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        }, 1000);
+                            }, timeoutSeconds * 1000);
+                        }, timeoutSeconds * 1000);
+                    }, timeoutSeconds * 1000);
+                }, timeoutSeconds * 1000);
+            }, timeoutSeconds * 1000);
+        }, timeoutSeconds * 1000);
     }
     constructPageLinksArray(url) {
         return new Promise((resolve, reject) => {
