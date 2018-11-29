@@ -37,12 +37,16 @@ class Water {
                 this.writeToFiles(urlObj.baseDir, value).then((value) => {
                     scrapeCount++;
                     if (scrapeCount == urls.length) {
-                        jetpack.copy('./documents/', '/Volumes/CESDD/', {
-                            overwrite: (srcInspectData, destInspectData) => {
-                                return srcInspectData.modifyTime > destInspectData.modifyTime;
-                            }
-                        });
-                        this.sayGoodbye();
+                        if (jetpack.exists('/Volumes/CESDD/')) {
+                            jetpack.copy('./documents/', '/Volumes/CESDD/', {
+                                overwrite: (srcInspectData, destInspectData) => {
+                                    return srcInspectData.modifyTime > destInspectData.modifyTime;
+                                }
+                            });
+                            this.sayGoodbye();
+                        } else {
+                            this.sayGoodbyeNoCopy();
+                        }
                     }
                 });
             });
@@ -87,6 +91,20 @@ class Water {
                             }, timeoutSeconds * 1000);
                         }, timeoutSeconds * 1000);
                     }, timeoutSeconds * 1000);
+                }, timeoutSeconds * 1000);
+            }, timeoutSeconds * 1000);
+        }, timeoutSeconds * 1000);
+    }
+    sayGoodbyeNoCopy() {
+        console.log(chalk.white.bgCyan.bold(`\n\n\n\n\n\n\n\n\n\n${startString} ENDING ${startString}`));
+        console.log(chalk.green(art.flower));
+        console.log(chalk.hex("#222").bgHex("#6900DB").bold(`${endString}    no USB    ${endString}`));
+        setTimeout(() => {
+            console.log(chalk.hex("#222").bgHex("#06B1DB").bold(`${endString} is connected ${endString}`));
+            setTimeout(() => {
+                console.log(chalk.hex("#222").bgHex("#00DBAE").bold(`${endString}   no data    ${endString}`));
+                setTimeout(() => {
+                    console.log(chalk.hex("#222").bgHex("#67DB55").bold(`${endString}  was copied  ${endString}`));
                 }, timeoutSeconds * 1000);
             }, timeoutSeconds * 1000);
         }, timeoutSeconds * 1000);
@@ -183,7 +201,7 @@ class Water {
                 let fileText = `QUESTION:\n${obj.questionText}\n\n\nQUESTION COMMENTS:\n${questionCommentsText}\n\n\nANSWERS:\n${answersText}`;
                 console.log(chalk.white.bgHex("#2FDB8D").bold(`\n\n\n${startString} START OF SCRAPED FILE ${startString}`));
                 console.log(fileText);
-                console.log(chalk.hex("#222").bgHex("#FFFF51").bold(`${endString} END OF SCRAPED FILE ${endString}`));
+                console.log(chalk.hex("#222").bgHex("#FFFF51").bold(`${endString}  END OF SCRAPED FILE  ${endString}`));
                 jetpack.dir(`documents/${baseDir}`)
                     .file(`${obj.questionSlug}.txt`, {content: fileText});
                 resolve(true);
