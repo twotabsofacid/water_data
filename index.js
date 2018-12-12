@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const art = require('./ascii-art');
 let scrapeCount = 0;
 let timeoutSeconds = 2;
+const driveName = 'COLLAPSE';
 const urls = [
     {
         url: 'https://gardening.stackexchange.com/questions?sort=newest',
@@ -37,8 +38,8 @@ class Water {
                 this.writeToFiles(urlObj.baseDir, value).then((value) => {
                     scrapeCount++;
                     if (scrapeCount == urls.length) {
-                        if (jetpack.exists('/Volumes/CESDD/')) {
-                            jetpack.copy('./documents/', '/Volumes/CESDD/', {
+                        if (jetpack.exists(`/Volumes/${driveName}/`)) {
+                            jetpack.copy('./documents/', `/Volumes/${driveName}/`, {
                                 overwrite: (srcInspectData, destInspectData) => {
                                     return srcInspectData.modifyTime > destInspectData.modifyTime;
                                 }
